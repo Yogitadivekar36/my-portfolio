@@ -1,0 +1,10 @@
+const menuToggle=document.querySelector(".menu-toggle");
+const navLinks=document.querySelector(".nav-links");
+menuToggle?.addEventListener("click",()=>{const open=navLinks.classList.toggle("open");menuToggle.setAttribute("aria-expanded",String(open));menuToggle.setAttribute("aria-label",open?"Close navigation":"Open navigation")});
+document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>{navLinks.classList.remove("open");menuToggle.setAttribute("aria-expanded","false");menuToggle.setAttribute("aria-label","Open navigation")}));
+const revealItems=document.querySelectorAll(".reveal");
+if("IntersectionObserver"in window){const observer=new IntersectionObserver((entries,obs)=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("is-visible");obs.unobserve(e.target)}}),{threshold:.1});revealItems.forEach(el=>observer.observe(el))}else revealItems.forEach(el=>el.classList.add("is-visible"));
+document.querySelectorAll(".case-toggle").forEach(button=>button.addEventListener("click",()=>{const gallery=button.closest(".work-card").querySelector(".gallery");const expanded=button.getAttribute("aria-expanded")==="true";button.setAttribute("aria-expanded",String(!expanded));gallery.hidden=expanded;button.innerHTML=expanded?'Explore project screens <span>＋</span>':'Hide project screens <span>−</span>'}));
+const toast=document.querySelector(".toast");
+document.querySelector(".copy-email")?.addEventListener("click",async e=>{const value=e.currentTarget.dataset.copy;try{await navigator.clipboard.writeText(value);toast.textContent="Email address copied";}catch{toast.textContent=value;}toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2200)});
+document.getElementById("year").textContent=new Date().getFullYear();
